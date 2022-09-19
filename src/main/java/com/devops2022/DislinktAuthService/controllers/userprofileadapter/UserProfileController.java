@@ -40,6 +40,14 @@ public class UserProfileController {
         return entity;       
     }
 
+    @GetMapping("/findpubliconly/{searchCriteria}")
+    public ResponseEntity<String> findPublicUserProfile(@PathVariable String searchCriteria) {         
+        ResponseEntity<String> entity = restTemplate.getForEntity(baseurl+"/findpubliconly/"+searchCriteria, String.class);
+
+        //restTemplate.exchange(baseurl+"/find/"+searchCriteria, HttpMethod.GET, entity, UserProfileDTO.class).getBody();
+        return entity;       
+    }
+
     @PutMapping("/edit/{username}")
     public ResponseEntity<String> editUserProfile(@PathVariable String username, @RequestBody UserProfileDTO userProfileDTO) {
         try {
