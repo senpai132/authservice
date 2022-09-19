@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,38 @@ public class UserPostController {
         try {        
             ResponseEntity<String> entity = restTemplate.getForEntity(baseurl+"/getAllUserPosts", String.class);
             return entity;       
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while retrieving posts", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/finallpublicusersposts")
+    public ResponseEntity<String> getAllPublicUsersPosts() {         
+        try {      
+            ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:8091/userprofile/findallpublicusers", String.class); 
+            ResponseEntity<String> entity2 = restTemplate.exchange(baseurl+"/getAllUserPosts", HttpMethod.PUT, entity, String.class);
+            return entity2;       
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while retrieving posts", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/finallfollowedusersposts/{username}")
+    public ResponseEntity<String> getAllFollowedUsersPosts(@PathVariable String username) {         
+        try {      
+            ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:8091/followship/findallfollowedusernames/"+username, String.class); 
+            ResponseEntity<String> entity2 = restTemplate.exchange(baseurl+"/getAllUserPosts", HttpMethod.PUT, entity, String.class);
+            return entity2;       
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while retrieving posts", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/findspecifiedfollowedusersposts/{username}")
+    public ResponseEntity<String> getAllSpecifiedUsersPosts(@PathVariable String username) {         
+        try {
+            ResponseEntity<String> entity2 = restTemplate.getForEntity(baseurl+"/getAllPostsForUser/"+username, String.class);
+            return entity2;       
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while retrieving posts", HttpStatus.INTERNAL_SERVER_ERROR);
         }
