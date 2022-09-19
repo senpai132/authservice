@@ -59,6 +59,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         .antMatchers("/notificationadapter/**").permitAll()
         .antMatchers("/jobopeningadapter/**").permitAll()
         .antMatchers("/messageadapter/**").permitAll()
+        .antMatchers("/commentadapter/**").permitAll()
+        .antMatchers("/dislikepostadapter/**").permitAll()
+        .antMatchers("/likepostadapter/**").permitAll()
+        .antMatchers("/postadapter/**").permitAll()
         .anyRequest().authenticated().and()
         // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
         .cors().and()
