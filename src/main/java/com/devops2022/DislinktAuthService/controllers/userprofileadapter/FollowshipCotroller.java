@@ -86,6 +86,17 @@ public class FollowshipCotroller {
         }       
     }
 
+    @GetMapping("/getpending/{initiator}")
+    public ResponseEntity<String> getPendingUsers(@PathVariable String initiator) {         
+        try {
+            ResponseEntity<String> entity = restTemplate.getForEntity(baseurl+"/getallpending/"+initiator, String.class);
+            return entity;
+        }
+        catch (Exception e) {
+            return new ResponseEntity<String>("Error occurred while retreiving list of pending follows", HttpStatus.INTERNAL_SERVER_ERROR);
+        }       
+    }
+
     @PutMapping("/follow/{initiator}")
     public ResponseEntity<String> followUser(@PathVariable String initiator, @RequestBody ProfileDetailsDTO target) {
         try {
