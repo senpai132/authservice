@@ -4,14 +4,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import com.devops2022.DislinktAuthService.helper.dto.UserProfileDTOs.FollowResponseDTO;
@@ -50,7 +43,7 @@ public class FollowshipCotroller {
         return new ResponseEntity<>("User " + target.getValue() + " unblocked successfully.", HttpStatus.OK);
     }
 
-    @GetMapping("/isblocked/{initiator}")
+    @PostMapping("/isblocked/{initiator}")
     public ResponseEntity<String> isUserBlocked(@PathVariable String initiator, @RequestBody ProfileDetailsDTO target) {         
         try {
             HttpEntity<ProfileDetailsDTO> request = new HttpEntity<>(target);
@@ -62,7 +55,7 @@ public class FollowshipCotroller {
         }       
     }
 
-    @GetMapping("/isfollowed/{initiator}")
+    @PostMapping("/isfollowed/{initiator}")
     public ResponseEntity<String> isUserFollowed(@PathVariable String initiator, @RequestBody ProfileDetailsDTO target) {         
         try {
             HttpEntity<ProfileDetailsDTO> request = new HttpEntity<>(target);
