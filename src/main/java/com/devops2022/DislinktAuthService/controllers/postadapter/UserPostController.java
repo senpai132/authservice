@@ -21,7 +21,8 @@ import com.devops2022.DislinktAuthService.helper.dto.postDTOs.UserPostDTO;
 public class UserPostController {
 
     private RestTemplate restTemplate;
-    private String baseurl = "http://localhost:8001";
+    private String baseurl = "http://post-service:8001";
+    private String profileBaseUrl = "http://profile-service:8091";
 
     @PostMapping("/saveUserPost")
     public ResponseEntity<String> addUserPost(@RequestBody UserPostDTO dto) {
@@ -47,10 +48,10 @@ public class UserPostController {
 
     @GetMapping("/finallpublicusersposts")
     public ResponseEntity<String> getAllPublicUsersPosts() {         
-        try {      
-            ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:8091/userprofile/findallpublicusers", String.class); 
+        try {
+            ResponseEntity<String> entity = restTemplate.getForEntity(profileBaseUrl + "/userprofile/findallpublicusers", String.class);
             ResponseEntity<String> entity2 = restTemplate.exchange(baseurl+"/getAllUserPosts", HttpMethod.PUT, entity, String.class);
-            return entity2;       
+            return entity2;
         } catch (Exception e) {
             return new ResponseEntity<>("Error occurred while retrieving posts", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -59,7 +60,7 @@ public class UserPostController {
     @GetMapping("/finallfollowedusersposts/{username}")
     public ResponseEntity<String> getAllFollowedUsersPosts(@PathVariable String username) {         
         try {      
-            ResponseEntity<String> entity = restTemplate.getForEntity("http://localhost:8091/followship/findallfollowedusernames/"+username, String.class); 
+            ResponseEntity<String> entity = restTemplate.getForEntity(profileBaseUrl + "/followship/findallfollowedusernames/"+username, String.class);
             ResponseEntity<String> entity2 = restTemplate.exchange(baseurl+"/getAllUserPosts", HttpMethod.PUT, entity, String.class);
             return entity2;       
         } catch (Exception e) {

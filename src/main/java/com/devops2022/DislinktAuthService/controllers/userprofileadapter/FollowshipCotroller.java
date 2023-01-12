@@ -15,7 +15,7 @@ import com.devops2022.DislinktAuthService.helper.dto.UserProfileDTOs.ProfileDeta
 @RequestMapping("/followshipadapter")
 public class FollowshipCotroller {
     private RestTemplate restTemplate;
-    private final String baseurl = "http://localhost:8091/followship";
+    private final String baseurl = "http://profile-service:8091/followship";
 
     @PutMapping("/block/{initiator}")
     public ResponseEntity<String> blockUser(@PathVariable String initiator, @RequestBody ProfileDetailsDTO target) {

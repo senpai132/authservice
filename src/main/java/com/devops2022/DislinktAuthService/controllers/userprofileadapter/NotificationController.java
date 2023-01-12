@@ -18,7 +18,7 @@ import com.devops2022.DislinktAuthService.helper.dto.UserProfileDTOs.FollowRespo
 @CrossOrigin
 @RequestMapping("/notificationadapter")
 public class NotificationController {
-    private final String baseurl = "http://localhost:8091/notifications";
+    private final String baseurl = "http://profile-service:8091/notifications";
     private RestTemplate restTemplate;
 
     @PutMapping("/editmsgnotification")
