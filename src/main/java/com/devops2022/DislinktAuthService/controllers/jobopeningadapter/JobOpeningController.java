@@ -20,7 +20,7 @@ import com.devops2022.DislinktAuthService.helper.dto.jobopeningsDTOs.JobOpeningD
 @RequestMapping("/jobopeningadapter")
 public class JobOpeningController {
     private RestTemplate restTemplate;
-    private final String baseurl = "http://localhost:8092/jobs";
+    private final String baseurl = "http://job-service:8092/jobs";
     
     
     @PostMapping("/add")

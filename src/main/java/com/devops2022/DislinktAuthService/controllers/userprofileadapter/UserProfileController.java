@@ -30,7 +30,7 @@ public class UserProfileController {
     @Autowired
     ClientService clientService;
 
-    private final String baseurl = "http://localhost:8091/userprofile";
+    private final String baseurl = "http://profile-service:8091/userprofile";
 
     @GetMapping("/find/{searchCriteria}")
     public ResponseEntity<String> findUserProfile(@PathVariable String searchCriteria) {         

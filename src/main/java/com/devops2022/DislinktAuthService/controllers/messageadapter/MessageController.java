@@ -21,7 +21,7 @@ import com.devops2022.DislinktAuthService.helper.dto.messageDTOs.MessageDTO;
 @RequestMapping("/messageadapter")
 public class MessageController {
     private RestTemplate restTemplate;
-    private final String baseurl = "http://localhost:8093/msg";
+    private final String baseurl = "http://message-service:8093/msg";
 
     @PostMapping("/send")
     public ResponseEntity<String> sendMessage(@RequestBody MessageDTO dto) {

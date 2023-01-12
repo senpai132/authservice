@@ -54,14 +54,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
         .antMatchers("/auth/**").permitAll()
-        .antMatchers("/followshipadapter/**").permitAll()
-        .antMatchers("/userprofileadapter/**").permitAll()
-        .antMatchers("/notificationadapter/**").permitAll()
-        .antMatchers("/jobopeningadapter/**").permitAll()
-        .antMatchers("/messageadapter/**").permitAll()
-        .antMatchers("/commentadapter/**").permitAll()
-        .antMatchers("/dislikepostadapter/**").permitAll()
-        .antMatchers("/likepostadapter/**").permitAll()
+        .antMatchers(HttpMethod.GET,"/userprofileadapter/**").permitAll()
         .antMatchers("/postadapter/**").permitAll()
         .anyRequest().authenticated().and()
         // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase

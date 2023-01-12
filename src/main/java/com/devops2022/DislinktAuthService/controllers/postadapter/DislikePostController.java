@@ -21,7 +21,7 @@ import com.devops2022.DislinktAuthService.helper.dto.postDTOs.LikePostDTO;
 @RequestMapping("/dislikepostadapter")
 public class DislikePostController {
     private RestTemplate restTemplate;
-    private final String baseurl = "http://localhost:8001/";
+    private final String baseurl = "http://post-service:8001/";
 
     @PostMapping("/saveDislikePost")
     public ResponseEntity<String> likePost(@RequestBody LikePostDTO dto) {

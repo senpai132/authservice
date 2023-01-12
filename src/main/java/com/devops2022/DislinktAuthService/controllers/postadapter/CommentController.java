@@ -20,7 +20,7 @@ import com.devops2022.DislinktAuthService.helper.dto.postDTOs.CommentDTO;
 public class CommentController {
 
     private RestTemplate restTemplate;
-    private String baseurl = "http://localhost:8001";
+    private String baseurl = "http://post-service:8001";
 
     @PostMapping("/saveComment")
     public ResponseEntity<String> addUserPost(@RequestBody CommentDTO dto) {
