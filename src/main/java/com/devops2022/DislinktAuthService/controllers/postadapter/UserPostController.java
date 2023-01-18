@@ -29,6 +29,10 @@ public class UserPostController {
         try {
             HttpEntity<UserPostDTO> request = new HttpEntity<>(dto);
             ResponseEntity<String> response = restTemplate.exchange(baseurl+"/saveUserPost", HttpMethod.POST, request, String.class);
+            ResponseEntity<String> entity = restTemplate.exchange(
+                    profileBaseUrl + "/notifications/new-post-notification/" + dto.getUsername(),
+                    HttpMethod.POST, null, String.class);
+
             return response;
         }
         catch (Exception e) {

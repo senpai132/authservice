@@ -5,11 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import com.devops2022.DislinktAuthService.helper.dto.UserProfileDTOs.FollowResponseDTO;
@@ -20,6 +16,18 @@ import com.devops2022.DislinktAuthService.helper.dto.UserProfileDTOs.FollowRespo
 public class NotificationController {
     private final String baseurl = "http://profile-service:8091/notifications";
     private RestTemplate restTemplate;
+
+    @GetMapping("/getnotificationsettings/{initiator}/{target}")
+    public ResponseEntity<String> getUserNotificationSettings(@PathVariable String initiator, @PathVariable String target) {
+        try {
+            String url = baseurl+"/getnotificationsettings/" + initiator + "/" + target;
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            return response;
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while getting user notifications settings", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PutMapping("/editmsgnotification")
     public ResponseEntity<String> updateMessageNotificationSettings(@RequestBody FollowResponseDTO target) {
@@ -45,6 +53,27 @@ public class NotificationController {
         }
     }
 
+    @DeleteMapping("/{user}")
+    public ResponseEntity<String> clearUserNotification(@PathVariable String user) {
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(baseurl+"/" + user, HttpMethod.DELETE, null, String.class);
+            return response;
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while deleting user notifications", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{user}")
+    public ResponseEntity<String> findAllUserNotification(@PathVariable String user) {
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(baseurl+"/" + user, String.class);
+            return response;
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while getting all user notifications", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     public NotificationController() {
         this.restTemplate = new RestTemplate();
     }

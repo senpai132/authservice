@@ -22,12 +22,17 @@ import com.devops2022.DislinktAuthService.helper.dto.messageDTOs.MessageDTO;
 public class MessageController {
     private RestTemplate restTemplate;
     private final String baseurl = "http://message-service:8093/msg";
+    private final String notificationBaseUrl = "http://profile-service:8091";
 
     @PostMapping("/send")
     public ResponseEntity<String> sendMessage(@RequestBody MessageDTO dto) {
         try {
             HttpEntity<MessageDTO> request = new HttpEntity<>(dto);
-            return restTemplate.exchange(baseurl+"/send/", HttpMethod.POST, request, String.class);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(baseurl+"/send/", HttpMethod.POST, request, String.class);
+            ResponseEntity<String> entity = restTemplate.exchange(
+                    notificationBaseUrl + "/notifications/new-msg-notification/" + dto.getSender() + "/" + dto.getReceiver(),
+                    HttpMethod.POST, null, String.class);
+            return  responseEntity;
         }
         catch (Exception e) {
             return new ResponseEntity<>("Error occurred while sending a message", HttpStatus.INTERNAL_SERVER_ERROR);
