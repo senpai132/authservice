@@ -55,7 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
         .antMatchers("/auth/**").permitAll()
         .antMatchers(HttpMethod.GET,"/userprofileadapter/**").permitAll()
-        .antMatchers("/postadapter/**").permitAll()
+        .antMatchers("/postadapter/**", "/actuator/**").permitAll()
         .anyRequest().authenticated().and()
         // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
         .cors().and()
