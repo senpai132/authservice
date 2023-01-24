@@ -52,7 +52,7 @@ public class AuthController {
 
     private RestTemplate restTemplate;
 
-    private final String baseurl = "http://localhost:8091/userprofile";
+    private final String baseurl = "http://profile-service:8091/userprofile";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
