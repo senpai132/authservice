@@ -22,14 +22,14 @@
       static_configs:
         - targets: ['auth-service:8090']
 
-#    - job_name: 'node_exporter'
-#      static_configs:
-#        - targets: [ 'node-exporter:9100' ]
+    - job_name: 'node_exporter'
+      static_configs:
+        - targets: [ 'node-exporter:9100' ]
 
     - job_name: 'grafana'
       static_configs:
         - targets: ['grafana:3000']
 
-#    - job_name: 'cAdvisor'
-#      static_configs:
-#        - targets: [ 'cadvisor:8080' ]
+    - job_name: 'cAdvisor'
+      static_configs:
+        - targets: [ 'cadvisor:8080' ]
