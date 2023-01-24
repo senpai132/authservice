@@ -1,0 +1,91 @@
+x-logging: &fluent-bit
+  driver: fluentd
+  options:
+    fluentd-address: ${FLUENT_BIT_ADDRESS}:24224
+services:
+  post-service:
+    image: senpai132/postservice:latest
+    restart: on-failure
+    ports:
+      - "8001:8001"
+    networks:
+      - servers
+      - monitoring
+    logging: *fluent-bit
+    environment:
+      JAEGER_DOMAIN: ${JAEGER_DOMAIN}
+
+  auth-service:
+    image: senpai132/authservice:latest
+    restart: on-failure
+    ports:
+      - "8090:8090"
+    networks:
+      - servers
+      - monitoring
+    logging: *fluent-bit
+    environment:
+      JAEGER_DOMAIN: ${JAEGER_DOMAIN}
+
+  job-service:    
+    image: senpai132/jobopeningservice:latest
+    restart: on-failure
+    ports:
+      - "8092:8092"
+    networks:
+      - servers
+      - monitoring
+    logging: *fluent-bit
+    environment:
+      JAEGER_DOMAIN: ${JAEGER_DOMAIN}
+
+  message-service:  
+    image: senpai132/messageservice:latest
+    restart: on-failure
+    depends_on:
+      - mongodb
+    ports:
+      - "8093:8093"
+    networks:
+      - servers
+      - monitoring
+    logging: *fluent-bit
+    environment:
+      JAEGER_DOMAIN: ${JAEGER_DOMAIN}
+
+  profile-service:
+    image: senpai132/profileservice:latest
+    restart: on-failure
+    ports:
+      - "8091:8091"
+    networks:
+      - servers
+      - monitoring
+    logging: *fluent-bit
+    environment:
+      JAEGER_DOMAIN: ${JAEGER_DOMAIN}
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    networks:
+      - servers
+      - monitoring
+
+  dislink-front:
+    image: senpai132/dislinkfront:latest
+    restart: on-failure
+    ports:
+      - "3013:80"
+    networks:
+      - servers
+
+networks:
+  servers:
+    name: servers
+    driver: bridge
+  monitoring:
+    external: true
